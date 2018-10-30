@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Denver Lunch Spinner</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script type="text/javascript">
+    var places = [
+      "Henrys",
+      "Otra Vez",
+      "Bayou Bobs",
+      "Hacienda CO",
+      "Sassafras",
+      "Greedy Hampster",
+      "Indian Buffet",
+      "5280 Burger Bar",
+      "Euclid Hall",
+      "Pints Pub",
+      "Boneys BBQ",
+      "Shish Kabob Grill",
+      "Pizza (Anthonys / Mellow Mushroom)",
+      "Las Delicias Uptown",
+    ];
+    function gimmeLunch() {
+      var lunch = places[Math.floor(Math.random() * places.length)];
+      document.getElementById('lunch').innerText = lunch;
+    }
+    window.onload = function() {
+      var ul = document.getElementById('list');
+      console.log(ul);
+      ul.innerHTML = places.map(function(place) {
+        return '<li class="list-group-item">' + place + '</li>'
+      }).join('');
+    };
+    </script>
+  </head>
+  <body>
+    <div class="text-center">
+      <h1>Denver Lunch Spinner</h1>
+      <div class="row">
+        <div class="col-md-3 col-md-offset-1"><ul class="list-group" id="list"></ul></div>
+        <div class="col-md-6">
+          <a onclick="gimmeLunch();" class="btn btn-lg btn-primary">Gimme Lunch</a>
+          <h3 id="lunch">Lunch</h3>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
