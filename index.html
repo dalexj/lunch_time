@@ -1,53 +1,106 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <title>Denver Lunch Spinner</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link
+      rel="stylesheet"
+      href="https://bootswatch.com/4/slate/bootstrap.min.css"
+      crossorigin="anonymous"
+    />
+    <style>
+      body {
+        padding: 20px;
+      }
+
+      #root {
+        display: flex;
+        flex-direction: column;
+      }
+
+      #header {
+        flex: 0;
+        display: flex;
+        align-self: center;
+      }
+
+      #content {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+      }
+
+      #content-inner {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+      }
+
+      #root {
+        display: flex;
+        flex: 1;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      #button-container {
+        padding-top: 50px;
+      }
+
+      #list {
+        flex-basis: 300px;
+        padding-bottom: 20px;
+      }
+    </style>
     <script type="text/javascript">
-    var places = [
-      "Henrys",
-      "Otra Vez",
-      "Bayou Bobs",
-      "Hacienda CO",
-      "Sassafras",
-      "Greedy Hampster",
-      "Indian Buffet",
-      "5280 Burger Bar",
-      "Euclid Hall",
-      "Pints Pub",
-      "Boneys BBQ",
-      "Shish Kabob Grill",
-      "Pizza (Anthonys / Mellow Mushroom)",
-      "Las Delicias Uptown",
-      "Sam's No. 3",
-    ];
-    function gimmeLunch() {
-      var lunch = places[Math.floor(Math.random() * places.length)];
-      document.getElementById('lunch').innerText = lunch;
-    }
-    window.onload = function() {
-      var ul = document.getElementById('list');
-      console.log(ul);
-      ul.innerHTML = places.map(function(place) {
-        return '<li class="list-group-item">' + place + '</li>'
-      }).join('');
-    };
+      var places = [
+        'Henrys',
+        'Otra Vez',
+        'Bayou Bobs',
+        'Hacienda CO',
+        'Sassafras',
+        'Greedy Hampster',
+        'Indian Buffet',
+        '5280 Burger Bar',
+        'Euclid Hall',
+        'Pints Pub',
+        'Boneys BBQ',
+        'Shish Kabob Grill',
+        'Pizza (Anthonys / Mellow Mushroom)',
+        'Las Delicias Uptown',
+        "Sam's No. 3",
+      ];
+      function gimmeLunch() {
+        var lunch = places[Math.floor(Math.random() * places.length)];
+        document.getElementById('lunch').innerText = lunch;
+      }
+      window.onload = function() {
+        var ul = document.getElementById('list');
+        console.log(ul);
+        ul.innerHTML = places
+          .map(function(place) {
+            return '<li class="list-group-item">' + place + '</li>';
+          })
+          .join('');
+      };
     </script>
   </head>
   <body>
-    <div class="text-center">
-      <h1>Denver Lunch Spinner</h1>
-      <div class="row">
-        <div class="col-md-3 col-md-offset-1"><ul class="list-group" id="list"></ul></div>
-        <div class="col-md-6">
-          <a onclick="gimmeLunch();" class="btn btn-lg btn-primary">Gimme Lunch</a>
-          <h3 id="lunch">Wow! Lunch</h3>
+    <div class="text-center" id="root">
+      <div class="col-md-3 col-md-offset-1" id="list"><ul class="list-group" id="list"></ul></div>
+      <div id="content">
+        <div id="content-inner">
+          <div id="header"><h1>Denver Lunch Spinner</h1></div>
+          <div id="button-container">
+            <a onclick="gimmeLunch();" class="btn btn-lg btn-primary">Gimme Lunch</a>
+            <h3 id="lunch">Wow! Lunch</h3>
+          </div>
         </div>
+        <footer class="footer text-center">
+          <a class="btn btn-lg btn-primary" href="https://github.com/dalexj/lunch_time">Pull Requests Accepted</a>
+        </footer>
       </div>
     </div>
-    <footer class="footer text-center">
-      <a class="btn btn-lg btn-primary" href="https://github.com/dalexj/lunch_time">Pull Requests Accepted</a>
-    </footer>
   </body>
 </html>
