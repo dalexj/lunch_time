@@ -13,10 +13,6 @@
         padding: 20px;
       }
 
-      #root {
-        display: flex;
-        flex-direction: column;
-      }
 
       #header {
         flex: 0;
@@ -36,21 +32,14 @@
         flex-direction: column;
       }
 
-      #root {
-        display: flex;
-        flex: 1;
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: center;
-      }
-
       #button-container {
         padding-top: 50px;
       }
 
       #list {
-        flex-basis: 300px;
         padding-bottom: 20px;
+        display: flex;
+        flex-direction: column;
       }
 
       #lunch {
@@ -58,24 +47,88 @@
         color: orange;
       }
 
+      .with-bubble {
+        display: inline-block;
+      }
+
+      /* override the default */
+      .row > .list-group-item {
+        border-bottom-right-radius: 0rem;
+        border-bottom-left-radius: 0rem;
+        border-top-right-radius: 0rem;
+        border-top-left-radius: 0rem;
+        border-top: none;
+        border-bottom: none;
+      }
+
+      .row:nth-child(odd) > div.list-group-item {
+        border-top: 1px solid rgba(0,0,0,0.6);
+        border-bottom: 1px solid rgba(0,0,0,0.6);
+      }
+
+      .row:first-child > div.list-group-item {
+        margin-bottom: 0;
+        border-top: 1px solid rgba(0,0,0,0.6);
+        border-top-right-radius: 0.25rem;
+        border-top-left-radius: 0.25rem;
+      }
+
+      .row:last-child  > div.list-group-item {
+        border-bottom: 1px solid rgba(0,0,0,0.6);
+        border-bottom-right-radius: 0.25rem;
+        border-bottom-left-radius: 0.25rem;
+      }
+
+      .speech-bubble {
+        color: black;
+        padding: 3px;
+        margin-left: 18px;
+        display: inline-block;
+        position: relative;
+        background: #00aabb;
+        border-radius: .4em;
+      }
+      .speech-bubble:after {
+         content: '';
+         position: absolute;
+         left: 0;
+         top: 50%;
+         width: 0;
+         height: 0;
+         border: 10px solid transparent;
+         border-right-color: #00aabb;
+         border-left: 0;
+         border-bottom: 0;
+         margin-top: -5px;
+         margin-left: -20px;
+         border-right-width: 20px;
+      }
     </style>
     <script type="text/javascript">
       var places = [
-        'Henrys',
-        'Otra Vez',
-        'Bayou Bobs',
-        'Hacienda CO',
-        'Sassafras',
-        'Indian Buffet',
-        '5280 Burger Bar',
-        'Euclid Hall',
-        'Boneys BBQ',
-        'Shish Kabob Grill',
-        'Pizza (Anthonys / Mellow Mushroom)',
-        'Las Delicias Uptown',
-        "Sam's No. 3",
-        "Pho / Ramen",
+        ['Henrys'],
+        ['Otra Vez', {'tuesday': 'Taco Tuesday - $5 margs <br />(regular size normal is $8)'}],
+        ['Bayou Bobs'],
+        ['Hacienda CO'],
+        ['Sassafras'],
+        ['Indian Buffet'],
+        ['5280 Burger Bar'],
+        ['Euclid Hall'],
+        ['Boneys BBQ'],
+        ['Shish Kabob Grill'],
+        ['Pizza (Anthonys / Mellow Mushroom)'],
+        ['Las Delicias Uptown'],
+        ["Sam's No. 3"],
+        ["Pho / Ramen"],
       ];
+      function showSpecials(specials) {
+        return specials[getDayName().toLowerCase()];
+      }
+      function getDayName(locale='en-US') {
+        var dateStr = (new Date()).toLocaleDateString(locale);
+        var date = new Date(dateStr);
+        return date.toLocaleDateString(locale, { weekday: 'long' });        
+      }
       function gimmeLunch() {
         var lunch = places[Math.floor(Math.random() * places.length)];
         document.getElementById('lunch').innerHTML = '<img src="spinner.gif">';
@@ -84,11 +137,18 @@
         }, 2000);
       }
       window.onload = function() {
-        var ul = document.getElementById('list');
-        console.log(ul);
-        ul.innerHTML = places
+        var div = document.getElementById('list');
+        console.log(div);
+        div.innerHTML = places
           .map(function(place) {
-            return '<li class="list-group-item">' + place + '</li>';
+            if (place[1] !== undefined && showSpecials(place[1])) {
+              return '<div class="row">' +
+                     '<div class="col-md-5 list-group-item with-bubble">' + place[0] + '</div>' +
+                     '<div class="speech-bubble">' + showSpecials(place[1]) + '</div>' +
+                     '</div>'
+            } else {
+              return '<div class="row"><div class="col-md-5 list-group-item">' + place[0] + '</div></div>';
+            }
           })
           .join('');
       };
@@ -96,18 +156,21 @@
   </head>
   <body>
     <div class="text-center" id="root">
-      <div class="col-md-3 col-md-offset-1" id="list"><ul class="list-group" id="list"></ul></div>
-      <div id="content">
-        <div id="content-inner">
-          <div id="header"><h1>Denver Lunch Spinner</h1></div>
-          <div id="button-container">
-            <a onclick="gimmeLunch();" class="btn btn-lg btn-primary">Gimme Lunch</a>
-            <h3 id="lunch">Wow! Lunch</h3>
+      <div class="row">
+        <div class="col-4 col-md-offset-1" id="list"><div class="list-group" id="list"></div></div>
+        <div class="col-4" id="content">
+          <div id="content-inner">
+            <div id="header"><h1>Denver Lunch Spinner</h1></div>
+            <div id="button-container">
+              <a onclick="gimmeLunch();" class="btn btn-lg btn-primary">Gimme Lunch</a>
+              <h3 id="lunch">Wow! Lunch</h3>
+            </div>
           </div>
+          <footer class="footer text-center">
+            <a class="btn btn-lg btn-primary" href="https://github.com/dalexj/lunch_time">Pull Requests Accepted</a>
+          </footer>
         </div>
-        <footer class="footer text-center">
-          <a class="btn btn-lg btn-primary" href="https://github.com/dalexj/lunch_time">Pull Requests Accepted</a>
-        </footer>
+        <div class="col-4"></div>
       </div>
     </div>
   </body>
