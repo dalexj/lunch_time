@@ -135,7 +135,7 @@
         var lunch = places[Math.floor(Math.random() * places.length)];
         document.getElementById('lunch').innerHTML = '<img src="spinner.gif">';
         setTimeout(function() {
-          document.getElementById('lunch').innerText = lunch;
+          document.getElementById('lunch').innerText = lunch[0];
         }, 2000);
       }
       window.onload = function() {
