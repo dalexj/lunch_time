@@ -12,45 +12,36 @@
       body {
         padding: 20px;
       }
-
-
       #header {
         flex: 0;
         display: flex;
         align-self: center;
       }
-
       #content {
         display: flex;
         flex: 1;
         flex-direction: column;
       }
-
       #content-inner {
         display: flex;
         flex: 1;
         flex-direction: column;
       }
-
       #button-container {
         padding-top: 50px;
       }
-
       #list {
         padding-bottom: 20px;
         display: flex;
         flex-direction: column;
       }
-
       #lunch {
         font-size: 60px;
         color: orange;
       }
-
       .with-bubble {
         display: inline-block;
       }
-
       /* override the default */
       .row > .list-group-item {
         border-bottom-right-radius: 0rem;
@@ -60,25 +51,21 @@
         border-top: none;
         border-bottom: none;
       }
-
       .row:nth-child(odd) > div.list-group-item {
         border-top: 1px solid rgba(0,0,0,0.6);
         border-bottom: 1px solid rgba(0,0,0,0.6);
       }
-
       .row:first-child > div.list-group-item {
         margin-bottom: 0;
         border-top: 1px solid rgba(0,0,0,0.6);
         border-top-right-radius: 0.25rem;
         border-top-left-radius: 0.25rem;
       }
-
       .row:last-child  > div.list-group-item {
         border-bottom: 1px solid rgba(0,0,0,0.6);
         border-bottom-right-radius: 0.25rem;
         border-bottom-left-radius: 0.25rem;
       }
-
       .speech-bubble {
         color: black;
         padding: 3px;
@@ -126,14 +113,14 @@
       function getDayName(locale='en-US') {
         var dateStr = (new Date()).toLocaleDateString(locale);
         var date = new Date(dateStr);
-        return date.toLocaleDateString(locale, { weekday: 'long' });        
+        return date.toLocaleDateString(locale, { weekday: 'long' });
       }
-      function gimmeLunch() {
+      function gimmeLunch(time) {
         var lunch = places[Math.floor(Math.random() * places.length)];
         document.getElementById('lunch').innerHTML = '<img src="spinner.gif">';
         setTimeout(function() {
           document.getElementById('lunch').innerText = lunch[0];
-        }, 2000);
+        }, time);
       }
       window.onload = function() {
         var div = document.getElementById('list');
@@ -161,7 +148,9 @@
           <div id="content-inner">
             <div id="header"><h1>Denver Lunch Spinner</h1></div>
             <div id="button-container">
-              <a href="#" onclick="gimmeLunch();" class="btn btn-lg btn-primary">Gimme Lunch</a>
+              <a href="#" onclick="gimmeLunch(2000);" class="btn btn-lg btn-primary">Gimme Lunch</a>
+              <a href="#" onclick="gimmeLunch(5000);" class="btn btn-lg btn-primary">Gimme A Good Lunch</a>
+              <a href="#" onclick="gimmeLunch(10000);" class="btn btn-lg btn-primary">Gimme A Fantastic Lunch</a>
               <h3 id="lunch">Wow! Lunch</h3>
             </div>
           </div>
